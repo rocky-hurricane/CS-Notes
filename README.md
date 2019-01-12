@@ -130,7 +130,7 @@
 
 ### :hammer: 工具 
 
-- [Git](https://github.com/CyC2018/CS-Notes/blob/master/docs/notes/Git.md)
+- [Git](https://github.com/rocky-hurricane/CS-Notes/blob/master/docs/notes/Git.md)
 
   一些 Git 的使用和概念。
 
