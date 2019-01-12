@@ -47,6 +47,9 @@ Git 版本库有一个称为 stage 的暂存区，还有自动创建的 master �
 - git reset -- files 使用当前分支上的修改覆盖暂存区，用来撤销最后一次 git add files
 - git checkout -- files 使用暂存区的修改覆盖工作目录，用来撤销本地修改
 
+- git reset --hard HEAD 用当前分支覆盖工作区
+- git reset --soft HEAD 用当前分支覆盖stage 缓存区
+
 <div align="center"> <img src="pics/17976404-95f5-480e-9cb4-250e6aa1d55f.png"/> </div><br>
 
 可以跳过暂存区域直接从分支中取出修改，或者直接提交修改到分支中。
