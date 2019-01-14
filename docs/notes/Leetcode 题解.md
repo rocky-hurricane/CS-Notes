@@ -47,7 +47,7 @@
     * [图](#图)
         * [二分图](#二分图)
         * [拓扑排序](#拓扑排序)
-        * [Union Find](#Union Find)
+        * [Union-Find](#Union-Find)
     * [位运算](#位运算)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
@@ -6579,7 +6579,7 @@ private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked, List<Int
 }
 ```
 
-### Union Find
+### Union-Find
 
 The main purpose of union find is to check if the given points are in the same tree.
 The key point of implementing the algorithm is to find the root node. If the given nodes have the same root node, they are in the same tree, or same they are connected.
