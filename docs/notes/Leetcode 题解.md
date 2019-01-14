@@ -47,7 +47,7 @@
     * [图](#图)
         * [二分图](#二分图)
         * [拓扑排序](#拓扑排序)
-        * [并查集](#Union Find)
+        * [Union Find](#Union Find)
     * [位运算](#位运算)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
@@ -6579,11 +6579,12 @@ private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked, List<Int
 }
 ```
 
-### 并查集
+### Union Find
 
-并查集可以动态地连通两个点，并且可以非常快速地判断两个点是否连通。
+The main purpose of union find is to check if the given points are in the same tree.
+The key point of implementing the algorithm is to find the root node. If the given nodes have the same root node, they are in the same tree, or same they are connected.
 
-**冗余连接** 
+**Redundant Connection** 
 
 [684. Redundant Connection (Medium)](https://leetcode.com/problems/redundant-connection/description/)
 
@@ -6596,54 +6597,41 @@ Explanation: The given undirected graph will be like this:
 2 - 3
 ```
 
-题目描述：有一系列的边连成的图，找出一条边，移除它之后该图能够成为一棵树。
 
 ```java
-public int[] findRedundantConnection(int[][] edges) {
-    int N = edges.length;
-    UF uf = new UF(N);
-    for (int[] e : edges) {
-        int u = e[0], v = e[1];
-        if (uf.connect(u, v)) {
-            return e;
-        }
-        uf.union(u, v);
-    }
-    return new int[]{-1, -1};
-}
+ public int[] findRedundantConnection(int[][] edges) {
+     int[] parents = new int[edges.length+1];
+     for (int i=0; i<parents.length; i++) {
+         // the root node of an individual node is itself
+         parents[i] = i;
+     }
 
-private class UF {
+     for (int[] edge : edges) {
+         int parent = edge[0];
+         int son = edge[1];
+         
+         int pp = findParent(parent, parents);
+         int sp = findParent(son, parents);
+         // the key point update the root node of parent, not the node ifself
+         // update parents[sp] or parents[pp], instead of parents[son] or [parent]
+         if (pp == sp) {
+            return edge;
+         } else if (pp < sp) {
+             parents[sp] = pp;
+         } else if (pp > sp) {
+             parents[pp] = sp;
+         }
 
-    private int[] id;
+     }
+     return parents;    
+ }
 
-    UF(int N) {
-        id = new int[N + 1];
-        for (int i = 0; i < id.length; i++) {
-            id[i] = i;
-        }
-    }
-
-    void union(int u, int v) {
-        int uID = find(u);
-        int vID = find(v);
-        if (uID == vID) {
-            return;
-        }
-        for (int i = 0; i < id.length; i++) {
-            if (id[i] == uID) {
-                id[i] = vID;
-            }
-        }
-    }
-
-    int find(int p) {
-        return id[p];
-    }
-
-    boolean connect(int u, int v) {
-        return find(u) == find(v);
-    }
-}
+ public int findParent(int node, int[] parents) {
+     while (parents[node] != node) {
+         node = parents[node];
+     }
+     return node;
+ }
 ```
 
 ## 位运算
