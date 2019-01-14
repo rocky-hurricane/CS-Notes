@@ -6582,7 +6582,7 @@ private boolean hasCycle(boolean[] globalMarked, boolean[] localMarked, List<Int
 ### Union-Find
 
 The main purpose of union find is to check if the given points are in the same tree.
-The key point of implementing the algorithm is to find the root node. If the given nodes have the same root node, they are in the same tree, or same they are connected.
+The key point of implementing the algorithm is to find the root node. If the given nodes have the same root node, they are in the same tree, or say they are connected to each other.
 
 **Redundant Connection** 
 
