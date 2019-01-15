@@ -1054,8 +1054,10 @@ private int binarySearch(int[] nums, int target) {
 }
 ```
 
-**find the middle value(not index)**
-[378. Kth Smallest Element in a Sorted Matrix ((Medium))] (https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
+
+**Find the middle value(not index)**
+
+[378. Kth Smallest Element in a Sorted Matrix (Medium)](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
 ```
  public int kthSmallest(int[][] matrix, int k) {
      int lo = matrix[0][0], hi = matrix[matrix.length-1][matrix[0].length-1]+1;
@@ -1071,6 +1073,65 @@ private int binarySearch(int[] nums, int target) {
      }
      return lo;
  }
+ ```
+ 
+ **The Kth Value of Two Sorted Arrays**
+ 
+ [4. Median of Two Sorted Arrays(hard)](https://leetcode.com/problems/median-of-two-sorted-arrays/)
+ 
+ this problem can be extended to find the kth element.
+ ```
+ 
+/**
+* 这题采用log(n+m)的复杂度，也就是寻找第K大的，注意每次比较都可以扔了一部分数据，这是关键点，注意区分奇数和偶数的
+* 必须保证nums1的可用长度始终大于nums2
+* */
+
+/**
+* 可以寻找第K大的数据，采用上述丢弃的方法
+* */
+ public double findKth(int[] nums1,int start1,int[] nums2,int start2,int k){
+     if((nums2.length - start2)==0)
+         return nums1[start1+k];
+     if(k==0){
+         return Math.min(nums1[start1], nums2[start2]);
+     }
+     int p1=Math.min(nums1.length-1,start1+(k-1)/2);
+     int p2=Math.min(nums2.length-1,start2+(k-1)/2);
+     if(nums1[p1]<nums2[p2]){
+         k=k-p1+start1-1;
+         start1=p1+1;
+     } else {
+         k=k-p2+start2-1;
+         start2=p2+1;
+     } 
+     if(nums1.length-start1>nums2.length-start2)
+         return findKth(nums1,start1,nums2,start2,k);
+     else{
+         return findKth(nums2,start2,nums1,start1,k);
+     }
+ }
+
+ /**
+  * 注意区分奇数的算法和偶数，必须保证nums1的可用长度始终大于nums2
+  * 
+  * */
+ public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+     if(nums2.length>nums1.length){
+         int[] tmp=nums1;
+         nums1=nums2;
+         nums2=tmp;
+     }
+     int total=nums1.length+nums2.length;
+     if(total%2==1)
+      return findKth(nums1,0,nums2,0,(nums1.length+nums2.length)/2);
+     else{
+         double a=findKth(nums1,0,nums2,0,(nums1.length+nums2.length)/2);
+         double b=findKth(nums1,0,nums2,0,(nums1.length+nums2.length-1)/2);
+         return (a+b)/2;
+     }
+ }
+
  ```
  
 
