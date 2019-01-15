@@ -873,9 +873,10 @@ public int binarySearch(int[] nums, int key) {
 
 **time complexity** 
 
-O(logN)。
+O(logN)
 
-**m calculation** 
+
+**median m calculation** 
 
 有两种计算中值 m 的方式：
 
