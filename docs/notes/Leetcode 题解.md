@@ -8,7 +8,7 @@
         * [荷兰国旗问题](#荷兰国旗问题)
     * [贪心思想](#贪心思想)
     * [Binary-Search](#Binary-Search)
-    * [分治](#分治)
+    * [Divide-and-Conquer](#Divide-and-Conquer)
     * [搜索](#搜索)
         * [BFS](#bfs)
         * [DFS](#dfs)
@@ -1136,7 +1136,7 @@ private int binarySearch(int[] nums, int target) {
  ```
  
 
-## 分治
+## Divide-and-Conquer
 
 **给表达式加括号** 
 
@@ -1182,6 +1182,44 @@ public List<Integer> diffWaysToCompute(String input) {
     return ways;
 }
 ```
+
+
+**Unique Binary Search Tree**
+
+[95. unique-binary-search-trees-ii (Medium)](https://leetcode.com/problems/unique-binary-search-trees-ii/)
+
+```java
+ public List<TreeNode> generateTrees(int n) {
+     if (n <=0) return new ArrayList<>();
+     return generateTrees(1, n);
+ }
+
+ public List<TreeNode> generateTrees(int left, int right) {
+     List<TreeNode> list = new ArrayList<>();
+     if (right < left) {
+         list.add(null);
+         return list;
+     }
+
+     for (int i=left; i<=right; i++) {
+         List<TreeNode> leftList = generateTrees(left, i-1);
+         List<TreeNode> rightList = generateTrees(i+1, right);
+
+         for (TreeNode l : leftList) {
+             for (TreeNode r : rightList) {
+                 TreeNode tn = new TreeNode(i);
+                 tn.left = l;
+                 tn.right = r;
+                 list.add(tn);
+             }
+         }
+     }
+     return list;
+ }
+
+```
+
+
 
 ## 搜索
 
