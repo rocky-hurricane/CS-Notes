@@ -7,7 +7,7 @@
         * [桶排序](#桶排序)
         * [荷兰国旗问题](#荷兰国旗问题)
     * [贪心思想](#贪心思想)
-    * [二分查找](#二分查找)
+    * [Binary-Search](#Binary-Search)
     * [分治](#分治)
     * [搜索](#搜索)
         * [BFS](#bfs)
@@ -850,9 +850,9 @@ public int maxProfit(int[] prices) {
 }
 ```
 
-## 二分查找
+## Binary-Search
 
-**正常实现** 
+**implemention** 
 
 ```java
 public int binarySearch(int[] nums, int key) {
@@ -871,11 +871,11 @@ public int binarySearch(int[] nums, int key) {
 }
 ```
 
-**时间复杂度** 
+**time complexity** 
 
-二分查找也称为折半查找，每次都能将查找区间减半，这种折半特性的算法时间复杂度为 O(logN)。
+O(logN)。
 
-**m 计算** 
+**m calculation** 
 
 有两种计算中值 m 的方式：
 
@@ -932,77 +932,6 @@ l   m   h
 
 当循环体退出时，不表示没有查找到 key，因此最后返回的结果不应该为 -1。为了验证有没有查找到，需要在调用端判断一下返回位置上的值和 key 是否相等。
 
-**求开方** 
-
-[69. Sqrt(x) (Easy)](https://leetcode.com/problems/sqrtx/description/)
-
-```html
-Input: 4
-Output: 2
-
-Input: 8
-Output: 2
-Explanation: The square root of 8 is 2.82842..., and since we want to return an integer, the decimal part will be truncated.
-```
-
-一个数 x 的开方 sqrt 一定在 0 \~ x 之间，并且满足 sqrt == x / sqrt。可以利用二分查找在 0 \~ x 之间查找 sqrt。
-
-对于 x = 8，它的开方是 2.82842...，最后应该返回 2 而不是 3。在循环条件为 l <= h 并且循环退出时，h 总是比 l 小 1，也就是说 h = 2，l = 3，因此最后的返回值应该为 h 而不是 l。
-
-```java
-public int mySqrt(int x) {
-    if (x <= 1) {
-        return x;
-    }
-    int l = 1, h = x;
-    while (l <= h) {
-        int mid = l + (h - l) / 2;
-        int sqrt = x / mid;
-        if (sqrt == mid) {
-            return mid;
-        } else if (mid > sqrt) {
-            h = mid - 1;
-        } else {
-            l = mid + 1;
-        }
-    }
-    return h;
-}
-```
-
-**大于给定元素的最小元素** 
-
-[744. Find Smallest Letter Greater Than Target (Easy)](https://leetcode.com/problems/find-smallest-letter-greater-than-target/description/)
-
-```html
-Input:
-letters = ["c", "f", "j"]
-target = "d"
-Output: "f"
-
-Input:
-letters = ["c", "f", "j"]
-target = "k"
-Output: "c"
-```
-
-题目描述：给定一个有序的字符数组 letters 和一个字符 target，要求找出 letters 中大于 target 的最小字符，如果找不到就返回第 1 个字符。
-
-```java
-public char nextGreatestLetter(char[] letters, char target) {
-    int n = letters.length;
-    int l = 0, h = n - 1;
-    while (l <= h) {
-        int m = l + (h - l) / 2;
-        if (letters[m] <= target) {
-            l = m + 1;
-        } else {
-            h = m - 1;
-        }
-    }
-    return l < n ? letters[l] : letters[0];
-}
-```
 
 **有序数组的 Single Element** 
 
@@ -1124,6 +1053,26 @@ private int binarySearch(int[] nums, int target) {
     return l;
 }
 ```
+
+**find the middle value(not index)**
+[378. Kth Smallest Element in a Sorted Matrix ((Medium))] (https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
+```
+ public int kthSmallest(int[][] matrix, int k) {
+     int lo = matrix[0][0], hi = matrix[matrix.length-1][matrix[0].length-1]+1;
+     while (lo < hi){
+         int mid = lo + (hi-lo)/2;
+         int cnt = 0, j = matrix[0].length-1;
+         for (int i = 0; i < matrix.length; i++){
+             while (j >= 0 && matrix[i][j] > mid)    j--;
+             cnt += (j+1);
+         }
+         if (cnt < k)  lo = mid+1;
+         else hi = mid;
+     }
+     return lo;
+ }
+ ```
+ 
 
 ## 分治
 
