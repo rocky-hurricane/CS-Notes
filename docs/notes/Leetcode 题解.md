@@ -1514,7 +1514,7 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 
 **Search from the leafs**
 
-[310 Minimum Height Trees(Medium)](https://leetcode.com/problems/minimum-height-trees/
+[310 Minimum Height Trees(Medium)](https://leetcode.com/problems/minimum-height-trees/)
 
 ```java
 public List<Integer> findMinHeightTrees(int n, int[][] edges) {
