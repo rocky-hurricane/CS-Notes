@@ -1454,6 +1454,63 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 }
 ```
 
+**optimized(127) bi-direction BFS**
+
+```
+ public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+     int wordLength = beginWord.length();
+     Set<String> wordLeft = new HashSet();
+     for(String word : wordList){
+         wordLeft.add(word);
+     }
+     if(!wordLeft.contains(endWord)) return 0;
+     Set<String> beginSet = new HashSet();
+     Set<String> endSet = new HashSet();
+     Queue<String> queue = new LinkedList();
+     //Set<String> visited = new HashSet();
+     beginSet.add(beginWord);
+     wordLeft.remove(endWord);
+     endSet.add(endWord);
+     int minLen = 1;
+     //boolean flag = false;
+     while(!beginSet.isEmpty() && !endSet.isEmpty()){
+         Set<String> curSet = beginSet;
+         Set<String> otherSet = endSet;
+         if(beginSet.size() > endSet.size()){
+             curSet = endSet;
+             otherSet = beginSet;
+         }
+         Set<String> expendSet = new HashSet();
+         for(String cur : curSet){
+             char[] curArr = cur.toCharArray();
+             for(int i = 0; i < wordLength; i++){
+                 char temp = curArr[i];
+                 for(char c = 'a'; c <= 'z'; c++){
+                     curArr[i] = c;
+                     String next = String.valueOf(curArr);
+                     if(c != temp &&  otherSet.contains(next)) return minLen + 1;
+                     if(wordLeft.contains(next)){
+                         expendSet.add(next);
+                         wordLeft.remove(next);
+                     }
+                 }
+                 curArr[i] = temp;
+             }
+         }
+
+         if(beginSet.size() > endSet.size()){
+             endSet = expendSet;
+         } else{
+             beginSet = expendSet;
+         }
+
+         minLen++;
+         //flag = !flag;
+     }
+     return 0;
+ }
+```
+
 ### DFS
 
 <div align="center"> <img src="pics/f7f7e3e5-7dd4-4173-9999-576b9e2ac0a2.png"/> </div><br>
