@@ -1517,32 +1517,42 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 [310 Minimum Height Trees(Medium)](https://leetcode.com/problems/minimum-height-trees/)
 
 ```java
-public List<Integer> findMinHeightTrees(int n, int[][] edges) {
-    if (n == 1) return Collections.singletonList(0);
-
-    List<Set<Integer>> adj = new ArrayList<>(n);
-    for (int i = 0; i < n; ++i) adj.add(new HashSet<>());
-    for (int[] edge : edges) {
-        adj.get(edge[0]).add(edge[1]);
-        adj.get(edge[1]).add(edge[0]);
-    }
-
-    List<Integer> leaves = new ArrayList<>();
-    for (int i = 0; i < n; ++i)
-        if (adj.get(i).size() == 1) leaves.add(i);
-
-    while (n > 2) {
-        n -= leaves.size();
-        List<Integer> newLeaves = new ArrayList<>();
-        for (int i : leaves) {
-            int j = adj.get(i).iterator().next();
-            adj.get(j).remove(i);
-            if (adj.get(j).size() == 1) newLeaves.add(j);
-        }
-        leaves = newLeaves;
-    }
-    return leaves;
-}
+ public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+     int count = n;
+     int[] degree = new int[n];
+     List<Integer>[] graph = new ArrayList[n];
+     for(int[] e:edges){
+         degree[e[1]]++;
+         degree[e[0]]++;
+         if(graph[e[0]] == null) graph[e[0]] = new ArrayList<>();
+         if(graph[e[1]] == null) graph[e[1]] = new ArrayList<>();
+         graph[e[0]].add(e[1]);
+         graph[e[1]].add(e[0]);
+     }
+     Queue<Integer> q = new LinkedList<>();
+     for(int i = 0;i<degree.length;i++){
+         if(degree[i] == 1) q.add(i);
+     }
+     boolean[] del = new boolean[n];
+     while(count > 2){
+         int size = q.size();
+         while(size>0){
+             int cur = q.poll();
+             size--;
+             del[cur] = true;
+             count--;
+             for(int next:graph[cur]){
+                 degree[next]--;
+                 if(degree[next] == 1) q.add(next);
+             }
+         }
+     }
+     List<Integer> res = new ArrayList<>();
+     for(int i = 0 ;i<n;i++){
+         if(!del[i]) res.add(i);
+     }
+     return res;
+ }
 ```
 
 
