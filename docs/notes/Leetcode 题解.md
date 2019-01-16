@@ -1454,9 +1454,10 @@ private int getShortestPath(List<Integer>[] graphic, int start, int end) {
 }
 ```
 
+
 **optimized(127) bi-direction BFS**
 
-```
+```java
  public int ladderLength(String beginWord, String endWord, List<String> wordList) {
      int wordLength = beginWord.length();
      Set<String> wordLeft = new HashSet();
