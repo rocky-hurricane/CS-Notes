@@ -94,6 +94,51 @@ public int[] twoSum(int[] numbers, int target) {
 }
 ```
 
+**Three Sum**
+
+Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+```java
+public List<List<Integer>> threeSum(int[] nums) {
+     if(nums == null || nums.length < 3) return new ArrayList();
+     Arrays.sort(nums);
+     List<List<Integer>> result = new ArrayList<>();
+
+     for(int i=0; i<nums.length-2 && nums[i]<=0; i++){
+         if( i>0 && nums[i] == nums[i-1])
+         continue;
+         int j = i+1;
+         int k = nums.length-1;
+         while(j<k){
+             if((j>i+1) && nums[j] == nums[j-1]) {
+               j++;
+               continue;
+             }
+             if(k<nums.length-1 && nums[k] == nums[k+1]) {
+               k--;
+               continue;
+             }
+             if(nums[j]+nums[k] > -nums[i]){
+                 k--;
+             }else if(nums[j]+nums[k] < -nums[i]){
+                 j++;
+             }else{
+                 List<Integer> pair = new ArrayList<>();
+                 pair.add(nums[i]);
+                 pair.add(nums[j]);
+                 pair.add(-nums[i]-nums[j]);
+                 result.add(pair);
+                 k--;
+                 j++;
+             }
+         }
+     }
+     return result; 
+ }
+```
+
+
+
 **两数平方和** 
 
 [633. Sum of Square Numbers (Easy)](https://leetcode.com/problems/sum-of-square-numbers/description/)
