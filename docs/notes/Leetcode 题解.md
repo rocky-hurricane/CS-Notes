@@ -23,6 +23,7 @@
         * [0-1 背包](#0-1-背包)
         * [股票交易](#股票交易)
         * [字符串编辑](#字符串编辑)
+        * [Regular Expression Matching](#Regular Expression Matching)
     * [数学](#数学)
         * [素数](#素数)
         * [最大公约数](#最大公约数)
@@ -3696,6 +3697,12 @@ public int minSteps(int n) {
     }
     return dp[n];
 }
+```
+
+### Regular Expression Matching
+
+[10. Regular Expression Matching(Hard)](https://leetcode.com/problems/regular-expression-matching/)
+```java
 ```
 
 ## 数学
