@@ -3250,6 +3250,31 @@ private int computeArraySum(int[] nums) {
 }
 ```
 
+*faster solution*
+```java
+ public boolean canPartition(int[] nums) {
+     int sum=0;
+     for(int num: nums)
+         sum+=num;
+     if(sum%2==1) return false;
+     int target=sum/2;
+     //Arrays.sort(nums);
+     return helper(nums, nums.length-1, target);
+ }
+
+ public boolean helper(int[] nums, int idx, int target){
+     //System.out.println(target+":"+idx);
+     if(target==0) return true;
+     for(int i=idx; i>=0; --i){
+         if(target<nums[i]) return false;
+         if(helper(nums, i-1, target-nums[i]))
+             return true;
+     }
+     return false;
+ }
+```
+
+
 **改变一组数的正负号使得它们的和为一给定数** 
 
 [494. Target Sum (Medium)](https://leetcode.com/problems/target-sum/description/)
