@@ -3250,7 +3250,7 @@ private int computeArraySum(int[] nums) {
 }
 ```
 
-*faster solution*
+*dfs solution*
 ```java
  public boolean canPartition(int[] nums) {
      int sum=0;
