@@ -5862,69 +5862,50 @@ public int[] nextGreaterElements(int[] nums) {
 - Java 中的  **HashMap**  主要用于映射关系，从而把两个元素联系起来。HashMap 也可以用来对元素进行计数统计，此时键为元素，值为计数。和 HashSet 类似，如果元素有穷并且范围不大，可以用整型数组来进行统计。在对一个内容进行压缩或者其它转换时，利用 HashMap 可以把原始内容和转换后的内容联系起来。例如在一个简化 url 的系统中 [Leetcdoe : 535. Encode and Decode TinyURL (Medium)](https://leetcode.com/problems/encode-and-decode-tinyurl/description/)，利用 HashMap 就可以存储精简后的 url 到原始 url 的映射，使得不仅可以显示简化的 url，也可以根据简化的 url 得到原始 url 从而定位到正确的资源。
 
 
-**数组中两个数的和为给定值** 
+**Minimum Window Substring**
 
-[1. Two Sum (Easy)](https://leetcode.com/problems/two-sum/description/)
-
-可以先对数组进行排序，然后使用双指针方法或者二分查找方法。这样做的时间复杂度为 O(NlogN)，空间复杂度为 O(1)。
-
-用 HashMap 存储数组元素和索引的映射，在访问到 nums[i] 时，判断 HashMap 中是否存在 target - nums[i]，如果存在说明 target - nums[i] 所在的索引和 i 就是要找的两个数。该方法的时间复杂度为 O(N)，空间复杂度为 O(N)，使用空间来换取时间。
+Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+Example:
+Input: S = "ADOBECODEBANC", T = "ABC"
+Output: "BANC"
 
 ```java
-public int[] twoSum(int[] nums, int target) {
-    HashMap<Integer, Integer> indexForNum = new HashMap<>();
-    for (int i = 0; i < nums.length; i++) {
-        if (indexForNum.containsKey(target - nums[i])) {
-            return new int[]{indexForNum.get(target - nums[i]), i};
-        } else {
-            indexForNum.put(nums[i], i);
-        }
-    }
-    return null;
+ public static String minWindow(String s, String t) {
+   char[] s_arr=s.toCharArray();
+   char[] t_arr=t.toCharArray();
+   int[] map=new int[256];
+   for(char ch:t_arr) {
+      map[ch]++;
+   }
+
+   int start=0;
+   int end=0;
+   int count=t.length();
+   int minL=Integer.MAX_VALUE;
+   int minStart=0;
+   while(end<s_arr.length) {
+      if(map[s_arr[end]]>0) {
+         count--;
+      }
+      map[s_arr[end]]--;
+      while(count==0) {
+         if(end-start+1<minL) {
+            minStart=start;
+            minL=end-start+1;	
+         }
+         map[s_arr[start]]++;
+         if(map[s_arr[start]]>0) {
+            count++;
+         }
+         start++;
+      }
+      end++;
+   }
+   if(minL==Integer.MAX_VALUE) return ""; 
+   return s.substring(minStart,minStart+minL);
 }
 ```
 
-**判断数组是否含有重复元素** 
-
-[217. Contains Duplicate (Easy)](https://leetcode.com/problems/contains-duplicate/description/)
-
-```java
-public boolean containsDuplicate(int[] nums) {
-    Set<Integer> set = new HashSet<>();
-    for (int num : nums) {
-        set.add(num);
-    }
-    return set.size() < nums.length;
-}
-```
-
-**最长和谐序列** 
-
-[594. Longest Harmonious Subsequence (Easy)](https://leetcode.com/problems/longest-harmonious-subsequence/description/)
-
-```html
-Input: [1,3,2,2,5,2,3,7]
-Output: 5
-Explanation: The longest harmonious subsequence is [3,2,2,2,3].
-```
-
-和谐序列中最大数和最小数只差正好为 1，应该注意的是序列的元素不一定是数组的连续元素。
-
-```java
-public int findLHS(int[] nums) {
-    Map<Integer, Integer> countForNum = new HashMap<>();
-    for (int num : nums) {
-        countForNum.put(num, countForNum.getOrDefault(num, 0) + 1);
-    }
-    int longest = 0;
-    for (int num : countForNum.keySet()) {
-        if (countForNum.containsKey(num + 1)) {
-            longest = Math.max(longest, countForNum.get(num + 1) + countForNum.get(num));
-        }
-    }
-    return longest;
-}
-```
 
 **最长连续序列** 
 
