@@ -4783,7 +4783,7 @@ Return 3. The paths that sum to 8 are:
 ```
 
 路径不一定以 root 开头，也不一定以 leaf 结尾，但是必须连续。
-
+*solution 1*
 ```java
 public int pathSum(TreeNode root, int sum) {
     if (root == null) return 0;
@@ -4798,6 +4798,28 @@ private int pathSumStartWithRoot(TreeNode root, int sum) {
     ret += pathSumStartWithRoot(root.left, sum - root.val) + pathSumStartWithRoot(root.right, sum - root.val);
     return ret;
 }
+```
+
+*solution 2*
+```java
+ public int pathSum(TreeNode root, int target) {
+     int[] sums = new int[1000];
+     return helper(sums, root, 1, target);
+ }
+
+ int helper(int[] sums, TreeNode node, int level, int target) {
+     if (node == null) return 0;
+     int hit = 0;
+     for (int i = 0; i < level; i++) {
+         sums[i] += node.val;
+         if (sums[i] == target) hit += 1;
+     }
+
+     int count = hit + helper(sums, node.left, level + 1, target)
+             + helper(sums, node.right, level + 1, target);
+     for (int i = 0; i < level; i++) sums[i] -= node.val;
+     return count;
+ }
 ```
 
 **子树** 
