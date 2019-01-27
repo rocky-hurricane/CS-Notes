@@ -6558,44 +6558,6 @@ public int findShortestSubArray(int[] nums) {
 }
 ```
 
-**对角元素相等的矩阵** 
-
-[766. Toeplitz Matrix (Easy)](https://leetcode.com/problems/toeplitz-matrix/description/)
-
-```html
-1234
-5123
-9512
-
-In the above grid, the diagonals are "[9]", "[5, 5]", "[1, 1, 1]", "[2, 2, 2]", "[3, 3]", "[4]", and in each diagonal all elements are the same, so the answer is True.
-```
-
-```java
-public boolean isToeplitzMatrix(int[][] matrix) {
-    for (int i = 0; i < matrix[0].length; i++) {
-        if (!check(matrix, matrix[0][i], 0, i)) {
-            return false;
-        }
-    }
-    for (int i = 0; i < matrix.length; i++) {
-        if (!check(matrix, matrix[i][0], i, 0)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-private boolean check(int[][] matrix, int expectValue, int row, int col) {
-    if (row >= matrix.length || col >= matrix[0].length) {
-        return true;
-    }
-    if (matrix[row][col] != expectValue) {
-        return false;
-    }
-    return check(matrix, expectValue, row + 1, col + 1);
-}
-```
-
 **嵌套数组** 
 
 [565. Array Nesting (Medium)](https://leetcode.com/problems/array-nesting/description/)
