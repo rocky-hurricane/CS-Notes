@@ -2392,35 +2392,23 @@ If nums = [1,2,2], a solution is:
 ```
 
 ```java
-public List<List<Integer>> subsetsWithDup(int[] nums) {
-    Arrays.sort(nums);
-    List<List<Integer>> subsets = new ArrayList<>();
-    List<Integer> tempSubset = new ArrayList<>();
-    boolean[] hasVisited = new boolean[nums.length];
-    for (int size = 0; size <= nums.length; size++) {
-        backtracking(0, tempSubset, subsets, hasVisited, size, nums); // 不同的子集大小
-    }
-    return subsets;
-}
+ List<List<Integer>> res;
+ public List<List<Integer>> subsetsWithDup(int[] nums) {
+     res = new ArrayList<>();
+     Arrays.sort(nums);
+     helper(nums, new ArrayList<>(), 0);
+     return res;
 
-private void backtracking(int start, List<Integer> tempSubset, List<List<Integer>> subsets, boolean[] hasVisited,
-                          final int size, final int[] nums) {
-
-    if (tempSubset.size() == size) {
-        subsets.add(new ArrayList<>(tempSubset));
-        return;
-    }
-    for (int i = start; i < nums.length; i++) {
-        if (i != 0 && nums[i] == nums[i - 1] && !hasVisited[i - 1]) {
-            continue;
-        }
-        tempSubset.add(nums[i]);
-        hasVisited[i] = true;
-        backtracking(i + 1, tempSubset, subsets, hasVisited, size, nums);
-        hasVisited[i] = false;
-        tempSubset.remove(tempSubset.size() - 1);
-    }
-}
+ }
+ private void helper(int[] nums, List<Integer> temp, int start) {
+     res.add(new ArrayList<Integer>(temp));
+     for (int i = start; i < nums.length; i++) {
+         if (i > start && nums[i] == nums[i-1]) continue;
+         temp.add(nums[i]);
+         helper(nums, temp, i+1);
+         temp.remove(temp.size() - 1);
+     }
+ }
 ```
 
 **分割字符串使得每个部分都是回文数** 
