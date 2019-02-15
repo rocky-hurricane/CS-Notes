@@ -3496,25 +3496,23 @@ public int combinationSum4(int[] nums, int target) {
 <div align="center"> <img src="pics/a3da4342-078b-43e2-b748-7e71bec50dc4.png"/> </div><br>
 
 ```java
-public int maxProfit(int[] prices) {
-    if (prices == null || prices.length == 0) {
-        return 0;
-    }
-    int N = prices.length;
-    int[] buy = new int[N];
-    int[] s1 = new int[N];
-    int[] sell = new int[N];
-    int[] s2 = new int[N];
-    s1[0] = buy[0] = -prices[0];
-    sell[0] = s2[0] = 0;
-    for (int i = 1; i < N; i++) {
-        buy[i] = s2[i - 1] - prices[i];
-        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
-        sell[i] = Math.max(buy[i - 1], s1[i - 1]) + prices[i];
-        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
-    }
-    return Math.max(sell[N - 1], s2[N - 1]);
-}
+// s1: hold, s2: empty
+ public int maxProfit(int[] prices) {
+     if (prices == null || prices.length < 2) return 0;
+
+     int empty = 0, sell = 0;
+     int hold = -prices[0], buy = -prices[0];
+
+     for (int i=1; i<prices.length; i++) {
+         int preempty = empty;
+         empty = Math.max(empty, sell);
+         sell = Math.max(buy+prices[i], hold+prices[i]);
+         hold = Math.max(hold, buy);
+         buy = preempty - prices[i];
+     }
+     return Math.max(empty, sell);
+
+ }
 ```
 
 **需要交易费用的股票交易** 
