@@ -3532,25 +3532,19 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 
 题目描述：每交易一次，都要支付一定的费用。
 
-<div align="center"> <img src="pics/61942711-45a0-4e11-bbc9-434e31436f33.png"/> </div><br>
-
 ```java
-public int maxProfit(int[] prices, int fee) {
-    int N = prices.length;
-    int[] buy = new int[N];
-    int[] s1 = new int[N];
-    int[] sell = new int[N];
-    int[] s2 = new int[N];
-    s1[0] = buy[0] = -prices[0];
-    sell[0] = s2[0] = 0;
-    for (int i = 1; i < N; i++) {
-        buy[i] = Math.max(sell[i - 1], s2[i - 1]) - prices[i];
-        s1[i] = Math.max(buy[i - 1], s1[i - 1]);
-        sell[i] = Math.max(buy[i - 1], s1[i - 1]) - fee + prices[i];
-        s2[i] = Math.max(s2[i - 1], sell[i - 1]);
-    }
-    return Math.max(sell[N - 1], s2[N - 1]);
-}
+ public int maxProfit(int[] prices, int fee) {
+     if (prices == null || prices.length < 2) return 0;
+
+     int hold = -prices[0], empty = 0;
+
+     for (int i=0; i<prices.length; i++) {
+         int prehold = hold;  
+         hold = Math.max(hold, empty - prices[i]);
+         empty = Math.max(empty, prices[i] + prehold - fee);
+     }
+     return Math.max(hold, empty);
+ }
 ```
 
 
