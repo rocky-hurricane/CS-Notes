@@ -4115,6 +4115,29 @@ public int majorityElement(int[] nums) {
 }
 ```
 
+```java
+// it is the same thought, and easy to understand.
+ public int majorityElement(int[] nums) {
+     if (nums == null || nums.length == 0) {
+         return 0;
+     }
+     int count = 1;
+     int m = nums[0];
+     for (int i = 1; i < nums.length; i++) {
+         if (nums[i] == m) {
+             count++;
+         } else {
+             count--;
+             if (count == 0) {
+                 m = nums[i];
+                 count = 1;
+             }
+         }
+     }
+     return m;
+ }
+```
+
 ### 其它
 
 **平方数** 
