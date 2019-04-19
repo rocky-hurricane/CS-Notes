@@ -331,6 +331,19 @@ private boolean isValid(String s, String target) {
 }
 ```
 
+```java
+用内置函数查substirng
+public String checkIfForm(String dd, String s) {
+
+     int index = -1;
+     for (int i=0; i<dd.length(); i++) {
+         index = s.indexOf(dd.charAt(i), index+1);
+         if (index == -1) return "";
+     }
+     return dd;
+}
+```
+
 ## 排序
 
 ### 快速选择
