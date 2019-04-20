@@ -394,41 +394,33 @@ public int findKthLargest(int[] nums, int k) {
 **快速选择** ：时间复杂度 O(N)，空间复杂度 O(1)
 
 ```java
-public int findKthLargest(int[] nums, int k) {
-    k = nums.length - k;
-    int l = 0, h = nums.length - 1;
-    while (l < h) {
-        int j = partition(nums, l, h);
-        if (j == k) {
-            break;
-        } else if (j < k) {
-            l = j + 1;
-        } else {
-            h = j - 1;
-        }
-    }
-    return nums[k];
-}
+ public int findKthLargest(int[] nums, int k) {
+     if (nums == null || nums.length == 0) return 0;
+     int p = findPivotPosition(nums, 0, nums.length-1, k);
+     return nums[k-1];
+ }
 
-private int partition(int[] a, int l, int h) {
-    int i = l, j = h + 1;
-    while (true) {
-        while (a[++i] < a[l] && i < h) ;
-        while (a[--j] > a[l] && j > l) ;
-        if (i >= j) {
-            break;
-        }
-        swap(a, i, j);
-    }
-    swap(a, l, j);
-    return j;
-}
+ public int findPivotPosition(int[] nums, int start, int end, int k) {
+     int pivot = nums[start];
+     int left = start+1, right = end;
+     while (left <= right) {
+         if (nums[left] >= pivot) {
+             left ++;
+         } else {
+             swap(nums, left, right--);
+         }
+     }
+     swap(nums, start, right);
+     if (right == k-1) return k;
+     else if (right < k-1) return findPivotPosition(nums, right+1, end, k);
+     else return findPivotPosition(nums, start, right-1, k);
+ }
 
-private void swap(int[] a, int i, int j) {
-    int t = a[i];
-    a[i] = a[j];
-    a[j] = t;
-}
+ public void swap(int[] nums, int i, int j) {
+     int k = nums[i];
+     nums[i] = nums[j];
+     nums[j] = k;
+ }
 ```
 
 ### 桶排序
