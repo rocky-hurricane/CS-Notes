@@ -1110,7 +1110,7 @@ private int binarySearch(int[] nums, int target) {
 **Find the middle value(not index)**
 
 [378. Kth Smallest Element in a Sorted Matrix (Medium)](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/)
-```
+```java
  public int kthSmallest(int[][] matrix, int k) {
      int lo = matrix[0][0], hi = matrix[matrix.length-1][matrix[0].length-1]+1;
      while (lo < hi){
@@ -1132,8 +1132,7 @@ private int binarySearch(int[] nums, int target) {
  [4. Median of Two Sorted Arrays(hard)](https://leetcode.com/problems/median-of-two-sorted-arrays/)
  
  this problem can be extended to find the kth element.
- ```
- 
+ ```java
 /**
 * 这题采用log(n+m)的复杂度，也就是寻找第K大的，注意每次比较都可以扔了一部分数据，这是关键点，注意区分奇数和偶数的
 * 必须保证nums1的可用长度始终大于nums2
