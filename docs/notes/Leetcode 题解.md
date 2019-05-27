@@ -5716,6 +5716,62 @@ class MapSum {
 }
 ```
 
+[212. Word Search II(Hard)](https://leetcode.com/problems/word-search-ii/)
+```java
+class Solution {
+    int[][] dire = new int[][]{{0,1},{0,-1},{-1,0},{1,0}};
+    public List<String> findWords(char[][] board, String[] words) {
+        TrieNode root = new TrieNode();
+        for (String word : words) {
+            buildTrie(root, word);
+        }
+        List<String> res = new ArrayList<>();
+        for (int i=0; i<board.length; i++) {
+            for (int j=0; j<board[0].length; j++) {
+                if (root.nodes[board[i][j]-'a'] != null)
+                findWords(board, i, j, root.nodes[board[i][j]-'a'], res);
+            }
+        }
+        return res;
+    }
+    
+    public void findWords(char[][] board, int i, int j, TrieNode node, List<String> res) {
+        if (node.word != null) {
+            res.add(node.word);
+            node.word = null;
+        }
+        char c = board[i][j];
+        board[i][j] = '#';
+        for (int[] dir : dire) {
+            int ni = i + dir[0];
+            int nj = j + dir[1];
+            if (ni<0 || ni>=board.length || nj<0 || nj>=board[0].length 
+                || board[ni][nj] == '#' || node.nodes[board[ni][nj]-'a'] == null) continue;
+
+            findWords(board, ni, nj, node.nodes[board[ni][nj]-'a'], res);
+        }
+        board[i][j] = c;
+    }
+    
+    
+    class TrieNode{
+        TrieNode[] nodes = new TrieNode[26];
+        String word;
+    }
+    
+    public void buildTrie(TrieNode node, String word) {
+        if (word == null || word.length() == 0) return;
+        char[] wc = word.toCharArray();
+        for (int i=0; i<wc.length; i++) {
+            int p = wc[i] - 'a';
+            if (node.nodes[p] == null) node.nodes[p] = new TrieNode();
+            node = node.nodes[p];
+            if (i == wc.length-1) node.word = word;
+        }
+    }
+}
+```
+
 
 ## 栈和队列
 
