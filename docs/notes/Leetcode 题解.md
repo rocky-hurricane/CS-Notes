@@ -351,6 +351,31 @@ public String checkIfForm(String dd, String s) {
 用于求解  **Kth Element**  问题，使用快速排序的 partition() 进行实现。
 
 需要先打乱数组，否则最坏情况下时间复杂度为 O(N<sup>2</sup>)。
+```java
+public int[] sortArray(int[] nums) {
+ return quickSort(nums);
+}
+public int[] quickSort(int[] nums){
+ partition(nums, 0, nums.length);
+ return nums;
+}
+
+private void partition(int[] nums, int l, int r){
+ if (l>=r) return;
+ int pivot=nums[l];
+ int mid=l;
+ for (int i=l+1; i<r; i++){
+   if (nums[i]<pivot){
+     mid+=1;
+     swap(nums, i, mid);
+   }
+ }
+ swap(nums, l, mid);
+ partition(nums, l, mid);
+ partition(nums, mid+1, r);
+}
+```
+
 
 ### 堆排序
 
