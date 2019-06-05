@@ -533,6 +533,7 @@ public String frequencySort(String s) {
 ```
 
 ### 归并排序
+
 ```java
 public void merge(int[] a, int left, int mid, int right){
     int []tmp=new int[a.length];
@@ -562,6 +563,7 @@ public void mergeSort(int[] a, int start, int end){
 ```
 
 **合并K个有序List**
+
 [23. Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)
 
 ```java
