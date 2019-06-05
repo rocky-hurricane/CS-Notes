@@ -5,6 +5,7 @@
         * [快速选择](#快速选择)
         * [堆排序](#堆排序)
         * [桶排序](#桶排序)
+        * [归并排序](#归并排序)
         * [荷兰国旗问题](#荷兰国旗问题)
     * [贪心思想](#贪心思想)
     * [Binary-Search](#Binary-Search)
@@ -530,6 +531,69 @@ public String frequencySort(String s) {
     return str.toString();
 }
 ```
+
+### 归并排序
+```java
+public void merge(int[] a, int left, int mid, int right){
+    int []tmp=new int[a.length];
+    int p1=left,p2=mid+1,k=left;
+
+    while(p1<=mid && p2<=right){
+        if(a[p1]<=a[p2])
+            tmp[k++]=a[p1++];
+        else
+            tmp[k++]=a[p2++];
+    }
+    while(p1<=mid) tmp[k++]=a[p1++];
+    while(p2<=right) tmp[k++]=a[p2++];
+
+    for (int i = left; i <=right; i++) 
+        a[i]=tmp[i];
+}
+
+public void mergeSort(int[] a, int start, int end){
+    if(start<end){
+        int mid=(start+end)/2;
+        mergeSort(a, start, mid);
+        mergeSort(a, mid+1, end);
+        merge(a, start, mid, end);
+    }
+}
+```
+
+**合并K个有序List**
+[23. Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)
+```java
+ public ListNode mergeKLists(ListNode[] lists) {
+     if (lists == null) return null;
+     return mergeKLists(lists, 0, lists.length-1);
+ }
+
+ public ListNode mergeKLists(ListNode[] lists, int s, int e) {
+     if (s > e) return null;
+     else if (s == e) return lists[s];
+     else {
+         int mid = s + (e-s) / 2;
+         ListNode node1 = mergeKLists(lists, s, mid);
+         ListNode node2 = mergeKLists(lists, mid+1, e);
+         return merge2Lists(node1, node2);
+     }
+ }
+
+ public ListNode merge2Lists(ListNode node1, ListNode node2) {
+     if (node1 == null) return node2;
+     if (node2 == null) return node1;
+
+     if (node1.val < node2.val) {
+         node1.next = merge2Lists(node1.next, node2);
+         return node1;
+     } else {
+         node2.next = merge2Lists(node1, node2.next);
+         return node2;
+     }
+ }
+```
+
 
 ### 荷兰国旗问题
 
