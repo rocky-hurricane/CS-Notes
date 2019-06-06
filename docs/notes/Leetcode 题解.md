@@ -1725,35 +1725,35 @@ Explanation: The endWord "cog" is not in wordList, therefore no possible transfo
 ```
 
 ```java
-private int m, n;
-private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+ private int[][] direction = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
-public int maxAreaOfIsland(int[][] grid) {
-    if (grid == null || grid.length == 0) {
-        return 0;
-    }
-    m = grid.length;
-    n = grid[0].length;
-    int maxArea = 0;
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            maxArea = Math.max(maxArea, dfs(grid, i, j));
-        }
-    }
-    return maxArea;
-}
+ public int numIslands(char[][] grid) {
+     if (grid == null || grid.length == 0) {
+         return 0;
+     }
+     int m = grid.length;
+     int n = grid[0].length;
+     int islandsNum = 0;
+     for (int i = 0; i < m; i++) {
+         for (int j = 0; j < n; j++) {
+             if (grid[i][j] != '0') {
+                 dfs(grid, i, j);
+                 islandsNum++;
+             }
+         }
+     }
+     return islandsNum;
+ }
 
-private int dfs(int[][] grid, int r, int c) {
-    if (r < 0 || r >= m || c < 0 || c >= n || grid[r][c] == 0) {
-        return 0;
-    }
-    grid[r][c] = 0;
-    int area = 1;
-    for (int[] d : direction) {
-        area += dfs(grid, r + d[0], c + d[1]);
-    }
-    return area;
-}
+ private void dfs(char[][] grid, int i, int j) {
+     if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0') {
+         return;
+     }
+     grid[i][j] = '0';
+     for (int[] d : direction) {
+         dfs(grid, i + d[0], j + d[1]);
+     }
+ }
 ```
 
 **矩阵中的连通分量数目** 
