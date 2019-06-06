@@ -2287,27 +2287,28 @@ A solution set is:
 ```
 
 ```java
-public List<List<Integer>> combinationSum(int[] candidates, int target) {
-    List<List<Integer>> combinations = new ArrayList<>();
-    backtracking(new ArrayList<>(), combinations, 0, target, candidates);
-    return combinations;
-}
+ public List<List<Integer>> combinationSum(int[] candidates, int target) {
+     List<List<Integer>> res = new ArrayList<>();
+     if (candidates == null || candidates.length == 0) return res;
 
-private void backtracking(List<Integer> tempCombination, List<List<Integer>> combinations,
-                          int start, int target, final int[] candidates) {
+     Arrays.sort(candidates);
+     combinationsum(candidates, 0, target, 0, new ArrayList<>(), res);
+     return res;
+ }
 
-    if (target == 0) {
-        combinations.add(new ArrayList<>(tempCombination));
-        return;
-    }
-    for (int i = start; i < candidates.length; i++) {
-        if (candidates[i] <= target) {
-            tempCombination.add(candidates[i]);
-            backtracking(tempCombination, combinations, i, target - candidates[i], candidates);
-            tempCombination.remove(tempCombination.size() - 1);
-        }
-    }
-}
+ public void combinationsum(int[] candidates, int start, int target, int subSum, List<Integer> tempList, List<List<Integer>> res) {
+     if (subSum == target) {
+         res.add(new ArrayList(tempList));
+         return;
+     } 
+
+     for (int i=start; i<candidates.length; i++) {
+         if (subSum + candidates[i] > target) break;
+         tempList.add(candidates[i]);
+         combinationsum(candidates, i, target, subSum + candidates[i], tempList, res);
+         tempList.remove(tempList.size() - 1);
+     }
+ }
 ```
 
 **含有相同元素的求组合求和** 
