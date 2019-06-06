@@ -2151,64 +2151,6 @@ private boolean backtracking(int curLen, int r, int c, boolean[][] visited, fina
 }
 ```
 
-**输出二叉树中所有从根到叶子的路径** 
-
-[257. Binary Tree Paths (Easy)](https://leetcode.com/problems/binary-tree-paths/description/)
-
-```html
-  1
- /  \
-2    3
- \
-  5
-```
-
-```html
-["1->2->5", "1->3"]
-```
-
-```java
-
-public List<String> binaryTreePaths(TreeNode root) {
-    List<String> paths = new ArrayList<>();
-    if (root == null) {
-        return paths;
-    }
-    List<Integer> values = new ArrayList<>();
-    backtracking(root, values, paths);
-    return paths;
-}
-
-private void backtracking(TreeNode node, List<Integer> values, List<String> paths) {
-    if (node == null) {
-        return;
-    }
-    values.add(node.val);
-    if (isLeaf(node)) {
-        paths.add(buildPath(values));
-    } else {
-        backtracking(node.left, values, paths);
-        backtracking(node.right, values, paths);
-    }
-    values.remove(values.size() - 1);
-}
-
-private boolean isLeaf(TreeNode node) {
-    return node.left == null && node.right == null;
-}
-
-private String buildPath(List<Integer> values) {
-    StringBuilder str = new StringBuilder();
-    for (int i = 0; i < values.size(); i++) {
-        str.append(values.get(i));
-        if (i != values.size() - 1) {
-            str.append("->");
-        }
-    }
-    return str.toString();
-}
-```
-
 **排列** 
 
 [46. Permutations (Medium)](https://leetcode.com/problems/permutations/description/)
