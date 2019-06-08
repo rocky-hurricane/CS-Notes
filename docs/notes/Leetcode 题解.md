@@ -3550,7 +3550,6 @@ public int combinationSum4(int[] nums, int target) {
 <div align="center"> <img src="pics/a3da4342-078b-43e2-b748-7e71bec50dc4.png"/> </div><br>
 
 ```java
-// s1: hold, s2: empty
  public int maxProfit(int[] prices) {
      if (prices == null || prices.length == 0) return 0;
      int hold = Integer.MIN_VALUE, sell = 0, cold = 0;
