@@ -3552,20 +3552,18 @@ public int combinationSum4(int[] nums, int target) {
 ```java
 // s1: hold, s2: empty
  public int maxProfit(int[] prices) {
-     if (prices == null || prices.length < 2) return 0;
+     if (prices == null || prices.length == 0) return 0;
+     int hold = Integer.MIN_VALUE, sell = 0, cold = 0;
 
-     int empty = 0, sell = 0;
-     int hold = -prices[0], buy = -prices[0];
+     for (int p : prices) {
+         int h = Math.max(hold, cold - p);
+         int c = Math.max(cold, sell);
 
-     for (int i=1; i<prices.length; i++) {
-         int preempty = empty;
-         empty = Math.max(empty, sell);
-         sell = Math.max(buy+prices[i], hold+prices[i]);
-         hold = Math.max(hold, buy);
-         buy = preempty - prices[i];
+         sell = hold + p;
+         cold = c;
+         hold = h;
      }
-     return Math.max(empty, sell);
-
+     return Math.max(cold, sell);
  }
 ```
 
