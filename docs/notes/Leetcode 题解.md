@@ -3584,18 +3584,18 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 题目描述：每交易一次，都要支付一定的费用。
 
 ```java
- public int maxProfit(int[] prices, int fee) {
-     if (prices == null || prices.length < 2) return 0;
+public int maxProfit(int[] prices, int fee) {
+  if (prices == null || prices.length == 0) return 0;
 
-     int hold = -prices[0], empty = 0;
-
-     for (int i=0; i<prices.length; i++) {
-         int prehold = hold;  
-         hold = Math.max(hold, empty - prices[i]);
-         empty = Math.max(empty, prices[i] + prehold - fee);
-     }
-     return Math.max(hold, empty);
- }
+  int hold = -prices[0], empty = 0;
+  for (int p : prices) {
+      int h = Math.max(hold, empty - p);
+      int e = Math.max(empty, hold + p - fee);
+      hold = h;
+      empty = e;
+  }
+  return empty;
+}
 ```
 
 
